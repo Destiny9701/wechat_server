@@ -28,12 +28,15 @@ class Login:
         cursor = conn.cursor()
         cursor.execute('''select password from user where name = ?''', (name,))
         try:
-            self.__pwd = cursor.fetchall()[0][0]
-        except Exception:
-            return False, '4003'
-        finally:
+            password = cursor.fetchall()
             cursor.close()
             conn.close()
+            if password:
+                self.__pwd = password[0][0]
+            else:
+                return False, '4001'
+        except Exception as e:
+            return False, '4001'
         if pwd == self.__pwd:
             return True, '4000'
         else:

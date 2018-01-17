@@ -1,10 +1,13 @@
 # __author:"Destiny"
 # date: 2018/1/14
 import sqlite3
+import os
+import sys
 
 from login import login
 from verify import yzm
 
+PASSAGE_URL = "https://blog.wangjian.ltd/?sort=4"
 SERVER = "0.0.0.0"
 PORT = 80
 VERIFY_IMG = yzm.IMG_PATH
@@ -20,7 +23,9 @@ ERROR_CODE = {
     '4008': '非法操作!用户名、密码或验证码长度错误!'
 }
 
+
 def init():
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     conn = sqlite3.connect(login.DATABASE, check_same_thread=False)
     cursor = conn.cursor()
     cursor.execute('''create table if not exists user(
@@ -36,4 +41,4 @@ def init():
 
 
 if __name__ == "__main__":
-    init()
+    pass
